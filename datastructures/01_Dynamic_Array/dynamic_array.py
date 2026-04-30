@@ -34,7 +34,8 @@ class DynamicArray:
         if index < 0:
             index = self._size + index
         if not (0 <= index < self._size):
-            raise IndexError(f"index {index} out of range for size {self._size}")
+            err = f"index {index} out of range for size {self._size}"
+            raise IndexError(err)
         return index
 
     #### Core Interface ###
@@ -49,10 +50,38 @@ class DynamicArray:
         self._size += 1
 
     def insert(self, index: int, item):
-        pass
+        """
+        Insert item before index, shifting everything after it right.
+        O(n) — unavoidable: contiguous layout requires physical shifting.
+        """
+        index = self._check_index(index)
+        if self._size == self._capacity:
+            self._resize(self._capacity * DynamicArray.growth_factor)
 
+        for i in range(self._size, index, -1):
+            self._array[i] = self._array[i - 1]
+
+        self._array[index] = item
+        self._size += 1
+
+    # TODO: Dirk - how should we handle deleting from an empty array?
     def delete(self, index: int):
-        pass
+        """
+        Remove element at index, shifting everything after it left.
+        O(n) for the same reason as insert.
+        Shrinks backing array when size falls to 25% of capacity.
+        """
+        index = self._check_index(index)
+
+        for i in range(index, self._size - 1):
+            self._array[i] = self._array[i + 1]
+
+        self._array[self._size - 1] = ctypes.py_object()
+        self._size -= 1
+
+        if self._capacity > 1 and self._size <= self._capacity // 4:
+            print(f"will shrink: {self}")
+            self._resize(max(1, self._capacity // 2))
 
     def __getitem__(self, index):
         index = self._check_index(index)
