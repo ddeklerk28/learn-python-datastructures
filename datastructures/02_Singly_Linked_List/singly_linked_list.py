@@ -4,9 +4,11 @@ class SinglyLinkedList:
     def __init__(self):
         self._head = None
         self._tail = None
+        self._size = 0
 
     def __len__(self) -> int:
-        """Return the number of elements. O(1) if you track size, O(n) if not."""
+        """Return the number of elements. O(1)"""
+        return self._size
 
     def __contains__(self, item) -> bool:
         """Support `x in list` syntax. O(n)."""
