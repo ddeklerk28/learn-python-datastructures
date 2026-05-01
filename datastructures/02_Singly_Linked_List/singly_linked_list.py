@@ -24,11 +24,9 @@ class SinglyLinkedList:
         if self._size == 0:
             self._head = Node(value, None)
         else:
-            temp = self._head.nxt
-            self._head = Node(value, temp)
-        #     temp       tail
-        #        \         \
-        # head->[2]->[3]->[4]->Null
+            temp = Node(value, self._head)
+            self._head = temp
+        self._size += 1
 
     def append(self, item) -> None:
         """Insert item at the tail. O(n)."""
@@ -53,3 +51,14 @@ class SinglyLinkedList:
 
     def is_empty(self) -> bool:
         """Return True if the list has no elements. O(1)."""
+
+    # curr/head->[1][2][3]
+    #
+    def print_list(self):
+        temp_str = ""
+        if self._head:
+            curr = self._head
+            while curr is not None:
+                temp_str += f"({curr.value})"
+                curr = curr.nxt
+        print(f"[{temp_str}]")
