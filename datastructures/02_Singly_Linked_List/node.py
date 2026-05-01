@@ -1,4 +1,8 @@
 class Node:
-    def __init__(self, data, node: Node):
+    def __init__(self, data, nxt: Node | None = None):
         self._data = data
-        self._next = node
+        self._nxt = nxt
+
+    @property
+    def nxt(self):
+        return self._nxt
