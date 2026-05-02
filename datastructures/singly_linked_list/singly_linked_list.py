@@ -1,4 +1,5 @@
-from node import Node
+from .node import Node
+from ..dynamic_array import DynamicArray
 
 class SinglyLinkedList:
     def __init__(self):

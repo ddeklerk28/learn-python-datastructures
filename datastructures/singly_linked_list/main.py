@@ -1,4 +1,4 @@
-from singly_linked_list import SinglyLinkedList
+from .singly_linked_list import SinglyLinkedList
 
 sll = SinglyLinkedList()
 sll.print_list()
