@@ -1,7 +1,7 @@
 from .node import Node
-from ..dynamic_array import DynamicArray
 
 class SinglyLinkedList:
+    ### Dunder methods ###
     def __init__(self):
         self._head: Node | None = None
         self._tail: Node | None = None
@@ -24,6 +24,17 @@ class SinglyLinkedList:
     def __repr__(self) -> str:
         """Human-readable representation for debugging."""
 
+    ### Help Methods ###
+    def _check_index(self, index: int):
+        """Normalise and validate an index, supporting negative indexing."""
+        if index < 0:
+            index = self._size + index
+        if not (0 <= index < self._size):
+            err = f"index {index} out of range for size {self._size}"
+            raise IndexError(err)
+        return index
+
+    ### Main API Methods ###
     def prepend(self, value) -> None:
         """Insert item at the head. O(1)."""
         if self.is_empty():
@@ -44,8 +55,20 @@ class SinglyLinkedList:
             curr.nxt = Node(value, None)
         self._size += 1
 
-    def insert(self, index: int, item) -> None:
+    def insert(self, index: int, value) -> None:
         """Insert item before the element currently at index. O(n)."""
+        index = self._check_index(index)
+        if index == 0:
+            self.prepend(value)
+        else:
+            next_index = 1
+            curr = self._head
+            while next_index is not index:
+                curr = curr.nxt
+                next_index += 1
+            curr.nxt = Node(value, curr.nxt)
+        self._size += 1
+
 
     def delete_at(self, index: int) -> any:
         """Remove and return element at index. O(n)."""

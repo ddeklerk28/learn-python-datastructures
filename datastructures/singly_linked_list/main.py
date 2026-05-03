@@ -12,3 +12,6 @@ sll.print_list()
 sll.append(5)
 sll.append(6)
 sll.print_list()
+
+sll.insert(2, 12)
+sll.print_list()
