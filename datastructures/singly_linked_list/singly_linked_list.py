@@ -33,8 +33,16 @@ class SinglyLinkedList:
             self._head = temp
         self._size += 1
 
-    def append(self, item) -> None:
+    def append(self, value) -> None:
         """Insert item at the tail. O(n)."""
+        if self.is_empty():
+            self._head = Node(value, None)
+        else:
+            curr = self._head
+            while curr.nxt is not None:
+                curr = curr.nxt
+            curr.nxt = Node(value, None)
+        self._size += 1
 
     def insert(self, index: int, item) -> None:
         """Insert item before the element currently at index. O(n)."""
